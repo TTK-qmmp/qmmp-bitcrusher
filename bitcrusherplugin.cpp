@@ -9,7 +9,11 @@ BitcrusherPlugin::BitcrusherPlugin()
     : Effect()
 {
     m_instance = this;
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    QSettings settings;
+#else
     QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
+#endif
     m_depth = settings.value("Bitcrusher/depth", 32).toDouble();
     m_downsample = settings.value("Bitcrusher/downsample", 1.0).toDouble();
 }

@@ -15,7 +15,11 @@ SettingsDialog::SettingsDialog(QWidget *parent)
         button->setFocusPolicy(Qt::NoFocus);
     }
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    QSettings settings;
+#else
     QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
+#endif
     m_ui.depthValue->setValue(settings.value("Bitcrusher/depth", 32).toDouble());
     m_ui.downsampleValue->setValue(settings.value("Bitcrusher/downsample", 1.0).toDouble());
 }
@@ -24,7 +28,11 @@ void SettingsDialog::accept()
 {
     const double depth = m_ui.depthValue->value();
     const double downsample = m_ui.downsampleValue->value();
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    QSettings settings;
+#else
     QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
+#endif
     settings.setValue("Bitcrusher/depth", depth);
     settings.setValue("Bitcrusher/downsample", downsample);
 
