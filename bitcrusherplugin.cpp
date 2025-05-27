@@ -21,10 +21,7 @@ BitcrusherPlugin::BitcrusherPlugin()
 BitcrusherPlugin::~BitcrusherPlugin()
 {
     m_instance = nullptr;
-    if(m_buffer)
-    {
-        delete[] m_buffer;
-    }
+    delete[] m_buffer;
 }
 
 void BitcrusherPlugin::applyEffect(Buffer *b)
@@ -60,11 +57,8 @@ void BitcrusherPlugin::configure(quint32 freq, ChannelMap map)
     if(channels() != map.count())
     {
         Effect::configure(freq, map);
-        if(m_buffer)
-        {
-            delete[] m_buffer;
-        }
 
+        delete[] m_buffer;
         m_buffer = new float[channels()]{0};
     }
 
