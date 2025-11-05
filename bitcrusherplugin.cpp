@@ -1,7 +1,7 @@
 #include "bitcrusherplugin.h"
 
+#include <cmath>
 #include <QSettings>
-#include <qmath.h>
 
 BitcrusherPlugin *BitcrusherPlugin::m_instance = nullptr;
 
@@ -10,9 +10,9 @@ BitcrusherPlugin::BitcrusherPlugin()
 {
     m_instance = this;
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-    QSettings settings;
+    const QSettings settings;
 #else
-    QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
+    const QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
 #endif
     m_depth = settings.value("Bitcrusher/depth", 32).toDouble();
     m_downsample = settings.value("Bitcrusher/downsample", 1.0).toDouble();
@@ -38,7 +38,7 @@ void BitcrusherPlugin::applyEffect(Buffer *b)
         {
             if(m_accumulator >= 1.0)
             {
-                m_buffer[channel] = floorf((data[i] * gain) * scale + 0.5) / scale / gain;
+                m_buffer[channel] = std::floor((data[i] * gain) * scale + 0.5) / scale / gain;
             }
 
             data[i++] = m_buffer[channel];

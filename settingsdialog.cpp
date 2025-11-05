@@ -15,9 +15,9 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     }
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-    QSettings settings;
+    const QSettings settings;
 #else
-    QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
+    const QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
 #endif
     m_ui.depthValue->setValue(settings.value("Bitcrusher/depth", 32).toDouble());
     m_ui.downsampleValue->setValue(settings.value("Bitcrusher/downsample", 1.0).toDouble());
